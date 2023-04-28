@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-df = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
+df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
 
 
 
@@ -25,8 +25,9 @@ phrases_alea = ["Avec le film {}, du genre {}, l'acteur/actrice {} et l'année {
 
 st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!")
 
+liste_films = [''] + df_films['primaryTitle']
 films = st.selectbox("Film : ",
-                     ['', 'Dirty Dancing', 'Titanic', 'Le flic de Beverly Hills', 'Spiderman', "Le fabuleux destin d'Amélie Poulain"])
+                     liste_films)
 
 st.write('Tu peux aussi éventuellement choisir parmi :')
 

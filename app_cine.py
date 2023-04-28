@@ -1,7 +1,11 @@
 import streamlit as st
 import numpy as np
 
-
+st.set_page_config(
+  page_title = "Ex-stream-ly Cool App",
+  layout = "wide",
+  page_icon = "🎞️")
+  
 phrases_acteurs = ['Tu aimes vraiment {} ?', "{} n'est pas mon acteur/actrice préféré(e) mais je respecte ton choix", "Moi aussi j'adore {}"]
 
 phrases_annees = ["Ah, c'était vraiment chouette les années {}", "Toi aussi t'as un très bon souvenir des années {} ?", "Bof, on a connu mieux que les années {}"]

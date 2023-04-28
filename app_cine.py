@@ -4,6 +4,7 @@ import pandas as pd
 
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
 df_genres = pd.read_pickle("df_genres.pkl.gz", compression = 'gzip')
+df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 
 
 
@@ -33,6 +34,7 @@ films = st.selectbox("Film : ",
 st.write('Tu peux aussi éventuellement choisir parmi :')
 
 liste_genres = [''] + list(df_genres['genres'])
+liste_acteurs = [''] + list(df_acteurs['primaryName'])
 
 with st.form("form 2"):
     col1, col2, col3 = st.columns(3)
@@ -41,7 +43,8 @@ with st.form("form 2"):
         genres = st.multiselect("Genres :",
                                 liste_genres)
     with col2:
-        acteurs = st.selectbox("Acteur :", ['', "Leonardo DiCaprio", "Clint Eastwood", "Alain Delon"])        
+        acteurs = st.selectbox("Acteur :",
+                               liste_acteurs)        
     
     with col3:  
         annees = st.radio("Années",

@@ -1,6 +1,10 @@
 import streamlit as st
 import numpy as np
 
+df = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
+
+
+
 st.set_page_config(
   page_title = "Ex-stream-ly Cool App",
   layout = "wide",

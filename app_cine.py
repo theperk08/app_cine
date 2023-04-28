@@ -7,13 +7,6 @@ df_genres = pd.read_pickle("df_genres.pkl.gz", compression = 'gzip')
 df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 
 
-change_text = """
-<style>
-div.st-d9 st-cb st-bh st-cc st-cd st-da {visibility: hidden;}
-div.st-d9 st-cb st-bh st-cc st-cd st-da:before {content: "Wähle eine Option"; visibility: visible;}
-</style>
-"""
-st.markdown(change_text, unsafe_allow_html=True)
 
 
 st.set_page_config(
@@ -49,7 +42,8 @@ with st.form("form 2"):
 
     with col1:
         genres = st.multiselect("Genres :",
-                                liste_genres)
+                                liste_genres,
+                               placeholder_empty="No cities")
     with col2:
         acteurs = st.selectbox("Acteur :",
                                liste_acteurs)        

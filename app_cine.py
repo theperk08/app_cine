@@ -42,7 +42,8 @@ with st.form("form 2"):
 
     with col1:
         genres = st.multiselect("Genres :",
-                                liste_genres)
+                                liste_genres,
+                               default = "Choisis")
     with col2:
         acteurs = st.selectbox("Acteur :",
                                liste_acteurs)        

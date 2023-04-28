@@ -51,7 +51,7 @@ if submit:
         
     
     
-    st.write("Avec le film {}, du genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, annees))
+    st.write("Avec les films {}, du genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, annees))
     
         
 #x = st.slider('Select a value')

@@ -32,7 +32,7 @@ films = st.selectbox("Film : ",
 
 st.write('Tu peux aussi éventuellement choisir parmi :')
 
-liste_genres = [''] + list(df_genres['genres']
+liste_genres = [''] + list(df_genres['genres'])
 
 with st.form("form 2"):
     col1, col2, col3 = st.columns(3)

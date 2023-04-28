@@ -25,7 +25,7 @@ phrases_alea = ["Avec le film {}, du genre {}, l'acteur/actrice {} et l'année {
 
 st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!")
 
-liste_films = ['oui'] + list(df_films['primaryTitle'])
+liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'])
 films = st.selectbox("Film : ",
                      liste_films)
 

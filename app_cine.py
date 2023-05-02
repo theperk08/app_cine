@@ -54,7 +54,7 @@ with st.form("form 2"):
                                   value = (1980, 1990))
                                    
 
-    submit = st.form_submit_button("Submit")
+    submit = st.form_submit_button("C'est parti !")
 
 # print the selected hobby
 if submit:

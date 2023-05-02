@@ -59,8 +59,8 @@ with st.form("form 2"):
 # print the selected hobby
 if submit:
     
-    if annees != 'pas de préférence':
-        st.write(np.random.choice(phrases_annees).format(annees))
+    #if annees != 'pas de préférence':
+    #    st.write(np.random.choice(phrases_annees).format(annees))
         
     if genres:
         st.write(np.random.choice(phrases_genres).format('/'.join(genres)))

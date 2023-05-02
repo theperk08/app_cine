@@ -5,7 +5,7 @@ import pandas as pd
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
 df_genres = pd.read_pickle("df_genres.pkl.gz", compression = 'gzip')
 df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
-
+df_annees = pd.read_pickle('df_annees.pkl.gz', compression = 'gzip')
 
 
 

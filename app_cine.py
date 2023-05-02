@@ -55,20 +55,13 @@ with st.form("form 2"):
     submit = st.form_submit_button("C'est parti !")
 
 if submit:
-    
     #if annees != 'pas de préférence':
-    #    st.write(np.random.choice(phrases_annees).format(annees))
-        
+    #    st.write(np.random.choice(phrases_annees).format(annees))        
     if genres:
-        st.write(np.random.choice(phrases_genres).format('/'.join(genres)))
-        
+        st.write(np.random.choice(phrases_genres).format('/'.join(genres)))        
     if acteurs != '':
-        st.write(np.random.choice(phrases_acteurs).format(acteurs))
-        
-    
+        st.write(np.random.choice(phrases_acteurs).format(acteurs))  
     
     st.write("Avec le film {}, du genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, str(debut_an) +'-'+ str(fin_an)))
     
-        
-#x = st.slider('Select a value')
-#st.write(x, 'squared is', x * x)
+ 

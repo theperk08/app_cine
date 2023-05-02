@@ -46,17 +46,14 @@ with st.form("form 2"):
         acteurs = st.selectbox("Acteur :",
                                liste_acteurs)        
     
-    with col3:  
-    #    annees = st.radio("Années",
-    #('pas de préférence', '1910-1920', '1920-1930', '1930-1940', '1940-1950', '1950-1960', '1960-1970', '1970-1980', '1980-1990', '1990-2000', '2000-2010', '2010-2020', '2020-'), index = 0 )
-        debut_an, fin_an = st.select_slider('Sélectionne une fourchette d\'années',
+    with col3:
+        debut_an, fin_an = st.select_slider("Sélectionne une fourchette d'années",
                                   options = df_annees['startYear'],
                                   value = (1980, 1990))
                                    
 
     submit = st.form_submit_button("C'est parti !")
 
-# print the selected hobby
 if submit:
     
     #if annees != 'pas de préférence':

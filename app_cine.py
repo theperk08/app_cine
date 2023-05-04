@@ -78,7 +78,7 @@ if submit:
 #film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
 #film_choisi = film_choisi.iloc[:,5:]    
 #neighbors = distanceKNN.kneighbors(film_choisi)
-if submit 1:
+if submit1:
   st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))
 #for i in range(1,5):
 #    film_bon = df_final.iloc[neighbors[1][0][i], 1]

@@ -41,11 +41,11 @@ st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!
 liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'])
 
 with st.form('form_1'):
-  col1 = st.columns(1)
+    col1 = st.columns(1)
   
-  with col1:
-    films = st.selectbox("Film : ",
-                     liste_films)
+    with col1:
+        films = st.selectbox("Film : ",
+                           liste_films)
     submit1 = st.form_submit_button("OK !")
     
 if submit1:

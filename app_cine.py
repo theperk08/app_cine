@@ -15,7 +15,7 @@ df_test = df_final.iloc[:, 5:]
 
 # Entraînement du modèle, sur les 4 plus proches (donc les 3)
 X = df_test[list(df_test.columns)]
-#distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 
 
@@ -39,14 +39,30 @@ phrases_alea = ["Avec le film {}, du genre {}, l'acteur/actrice {} et l'année {
 st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!")
 
 liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'])
-films = st.selectbox("Film : ",
+
+with st.form('form_1'):
+  col1 = st.columns(1)
+  
+  with col1:
+    films = st.selectbox("Film : ",
                      liste_films)
-submit1 = st.form_submit_button("OK !")
+    submit1 = st.form_submit_button("OK !")
+    
+if submit1:
+    st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))    
+    neighbors = distanceKNN.kneighbors(film_choisi)
+    for i in range(1,5):
+        film_bon = df_final.iloc[neighbors[1][0][i], 1]
+        st.write(' - '.format(film_bon))
+
+
 
 st.write('Tu peux aussi éventuellement choisir parmi :')
 
 liste_genres = [''] + list(df_genres['genres'])
 liste_acteurs = [''] + list(df_acteurs['primaryName'])
+
+
 
 with st.form("form 2"):
     col1, col2, col3 = st.columns(3)
@@ -78,8 +94,6 @@ if submit:
 #film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
 #film_choisi = film_choisi.iloc[:,5:]    
 #neighbors = distanceKNN.kneighbors(film_choisi)
-if submit1:
-    st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))
 #for i in range(1,5):
 #    film_bon = df_final.iloc[neighbors[1][0][i], 1]
 #    st.write(' - '.format(film_bon))

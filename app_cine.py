@@ -1,11 +1,23 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import NearestNeighbors
 
+# import des fichiers
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
 df_genres = pd.read_pickle("df_genres.pkl.gz", compression = 'gzip')
 df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 df_annees = pd.read_pickle('df_annees.pkl.gz', compression = 'gzip')
+df_final = pd.read_pickle('df_merge_final_ML.pkl.gz', compression = 'gzip')
+
+# récupération des colonnes intéressantes pour le ML
+df_test = df_final.iloc[:,5:]
+
+# Entraînement du modèle
+X = df_test[list(df_test.columns)]
+distanceKNN = NearestNeighbors(n_neighbors = 5).fit(X)
 
 
 
@@ -62,6 +74,7 @@ if submit:
     if acteurs != '':
         st.write(np.random.choice(phrases_acteurs).format(acteurs))  
     
-    st.write("Avec le film {}, du genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, str(debut_an) +'-'+ str(fin_an)))
+    st.write("Avec le(s) genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, str(debut_an) +'-'+ str(fin_an)))
     
- 
+    
+st.write('Avec le film {} '.format(films))

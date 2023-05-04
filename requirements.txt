@@ -3,5 +3,5 @@ streamlit
 seaborn
 matplotlib
 plotly
-pandas
+pandas==1.5.3
 scikit-learn

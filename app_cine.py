@@ -13,11 +13,11 @@ df_annees = pd.read_pickle('df_annees.pkl.gz', compression = 'gzip')
 df_final = pd.read_pickle('df_merge_final_ML.pkl.gz', compression = 'gzip')
 
 # récupération des colonnes intéressantes pour le ML
-df_test = df_final.iloc[:,5:]
+df_test = df_final.iloc[:, 5:]
 
-# Entraînement du modèle
+# Entraînement du modèle, sur les 4 plus proches (donc les 3)
 X = df_test[list(df_test.columns)]
-distanceKNN = NearestNeighbors(n_neighbors = 5).fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 
 
@@ -76,5 +76,10 @@ if submit:
     
     st.write("Avec le(s) genre {}, l'acteur/actrice {} et les années {}\n je te suggère fortement :".format(films, "/".join(genres), acteurs, str(debut_an) +'-'+ str(fin_an)))
     
-    
-st.write('Avec le film {} '.format(films))
+film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
+film_choisi = film_choisi.iloc[:,5:]    
+neighbors = distanceKNN.kneighbors(film_choisi)
+st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))
+for i in range(1,5):
+    film_bon = df_final.iloc[neighbors[1][0][i], 1]
+    st.write(' - '.format(film_bon))

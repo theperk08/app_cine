@@ -1,7 +1,1 @@
-numpy
-streamlit
-seaborn
-matplotlib
-plotly
-pandas==1.5.3
 scikit-learn

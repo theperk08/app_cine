@@ -15,7 +15,7 @@ df_test = df_final.iloc[:, 5:]
 
 # Entraînement du modèle, sur les 4 plus proches (donc les 3)
 X = df_test[list(df_test.columns)]
-distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
+#distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 
 
@@ -48,11 +48,11 @@ with st.form('form_1'):
     
 if submit1:
     st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))    
-    film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
-    film_choisi = film_choisi.iloc[:,5:]
-    neighbors = distanceKNN.kneighbors(film_choisi)
-    films_bons = df_final.iloc[neighbors[1][0][1:], 1].values
-    st.write(' - {}'.format(films_bons))
+    #film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
+    #film_choisi = film_choisi.iloc[:,5:]
+    #neighbors = distanceKNN.kneighbors(film_choisi)
+    #films_bons = df_final.iloc[neighbors[1][0][1:], 1].values
+    #st.write(' - {}'.format(films_bons))
 
 
 

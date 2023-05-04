@@ -41,6 +41,7 @@ st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!
 liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'])
 films = st.selectbox("Film : ",
                      liste_films)
+submit1 = st.form_submit_button("OK !")
 
 st.write('Tu peux aussi éventuellement choisir parmi :')
 
@@ -77,7 +78,8 @@ if submit:
 #film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
 #film_choisi = film_choisi.iloc[:,5:]    
 #neighbors = distanceKNN.kneighbors(film_choisi)
-st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))
+if submit 1:
+  st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))
 #for i in range(1,5):
 #    film_bon = df_final.iloc[neighbors[1][0][i], 1]
 #    st.write(' - '.format(film_bon))

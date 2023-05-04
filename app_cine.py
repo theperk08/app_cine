@@ -14,8 +14,8 @@ df_final = pd.read_pickle('df_merge_final_ML.pkl.gz', compression = 'gzip')
 df_test = df_final.iloc[:, 5:]
 
 # Entraînement du modèle, sur les 4 plus proches (donc les 3)
-#X = df_test[list(df_test.columns)]
-#distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
+X = df_test[list(df_test.columns)]
+distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 
 

@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-#from sklearn.neighbors import NearestNeighbors
+from sklearn.neighbors import NearestNeighbors
 
 # import des fichiers
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')

@@ -64,7 +64,7 @@ with st.form('form_1'):
         
     submit1 = st.form_submit_button("OK !")
     
-if submit1 and (films != 'Entre ton film préféré'):
+if submit1 and (films != 'Entre ton film pref'):
     st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))    
     film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films) | (df_final['frenchTitle'] == films)]
     film_choisi = film_choisi.iloc[0:1, 3:-1]

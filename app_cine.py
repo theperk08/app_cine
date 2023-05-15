@@ -13,7 +13,7 @@ df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 df_final = pd.read_pickle('df_merge_final_ML.pkl.gz', compression = 'gzip')
 
 # récupération des colonnes intéressantes pour le ML
-df_test = df_final.iloc[:, 3:100]
+df_test = df_final.iloc[:, 3:len(df_final.columns)  - 1]
 
 # A FAIRE
 # Préciser que toutes les colonnes sont de la même importance et de la même grandeur
@@ -67,7 +67,7 @@ with st.form('form_1'):
 if submit1 and (films != 'Entre ton film pref'):
     st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))    
     film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films) | (df_final['frenchTitle'] == films)]
-    film_choisi = film_choisi.iloc[0:1, 3:100]
+    film_choisi = film_choisi.iloc[0:1, 3:len(df_final.columns)  - 1]
     neighbors = distanceKNN.kneighbors(film_choisi)
     films_bons = df_final.iloc[neighbors[1][0][1:], -1].values
     tconsts =  df_final.iloc[neighbors[1][0][1:], 0].values

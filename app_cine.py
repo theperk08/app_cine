@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import requests
+#import requests
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
@@ -102,14 +102,14 @@ if submit1 and (films != 'Entre ton film préféré'):
         with cols:            
         
             url = url_api + str(tconst) + key_api
-            try:
-                response = requests.get(url)
-                response.raise_for_status()
-                data = response.json()
-                url_image = data['Poster']
-                st.image(url_image, width=200)
-            except requests.exceptions.RequestException as e:
-                print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+            #try:
+            #    response = requests.get(url)
+            #    response.raise_for_status()
+            #    data = response.json()
+            #    url_image = data['Poster']
+            #    st.image(url_image, width=200)
+            #except requests.exceptions.RequestException as e:
+            #    print('Une erreur est survenue lors de l\'appel à l\'API :', e)
             # parfois il n'existe pas de titre en français
             if type(titre_fr) == str:
                 st.write(f' - {titre_fr} ({annee})')

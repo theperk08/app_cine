@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import requests
 from sklearn.neighbors import NearestNeighbors
-#from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
 # import des fichiers
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
@@ -13,22 +14,30 @@ df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 df_final = pd.read_pickle('df_merge_final_ML.pkl.gz', compression = 'gzip')
 
 # récupération des colonnes intéressantes pour le ML
-df_test = df_final.iloc[:, 3:10000]
+df_final2 = df_final.copy(deep= True)
+#df_final2[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = StandardScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+df_final2[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = MinMaxScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+
+df_test = df_final2.iloc[:, 4:]
+
+#df_test = df_final.iloc[:, 8:]
 
 # A FAIRE
 # Préciser que toutes les colonnes sont de la même importance et de la même grandeur
 # Scale data
-# scaler = StandardScaler().fit(X)
+#scaler = StandardScaler().fit(X)
 # X_scaled = scaler.transform(X)
 
-# Entraînement du modèle, sur les 4 plus proches (donc les 3)
+
 X = df_test[list(df_test.columns)]
 
 #scaler = StandardScaler().fit(X)
 #X_scaled = scaler.transform(X)
 
+# Entraînement du modèle, sur les 4 plus proches (donc les 3)
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X_scaled)
-distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
+#distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 
 st.set_page_config(
   page_title = "Ex-stream-ly Cool App",
@@ -49,7 +58,8 @@ phrases_alea = ["Avec le film {}, du genre {}, l'acteur/actrice {} et l'année {
 
 st.title("Dis-moi ton film préféré et je t'en ferai aimer encore d'autres !!!")
 
-liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'])
+liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'].map(str) + ' (' + df_films['startYear'].map(str) + ')')
+    #df_films['primaryTitle'] + ' (' + str(df_films['startYear']) + ')')
 
 #url_imdb = "https://www.imdb.com/title/tt0006206/"
 #url_imdb = "https://m.media-amazon.com/images/M/MV5BMTc1NTY3NDIzNl5BMl5BanBnXkFtZTgwNTIyODg5MTE@._V1_QL75_UY281_CR6,0,190,281_.jpg"
@@ -61,22 +71,34 @@ url_api = "http://www.omdbapi.com/?i="
 with st.form('form_1'):
     films = st.selectbox("Film : ",
                            liste_films)
+    films_titre = films[:-7]
+    try:
+        films_annee = int(films[-5:-1])
+    except:
+        films_annee = 0
         
     submit1 = st.form_submit_button("OK !")
     
-if submit1 and (films != 'Entre ton film pref'):
-    st.write('Avec le film {} , je te suggère fortement de regarder les films :'.format(films))    
-    film_choisi = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films) | (df_final['frenchTitle'] == films)]
-    film_choisi = film_choisi.iloc[0:1, 3:10000]
+if submit1 and (films != 'Entre ton film préféré'):
+    st.write(f'Avec le film {films_titre} ({films_annee}) , je te suggère fortement de regarder les films :')    
+    film_choisi = df_final2[((df_final['primaryTitle'] == films_titre) & (df_final['startYear'] == films_annee) )
+                           | ((df_final['originalTitle'] == films_titre)  & (df_final['startYear'] == films_annee))
+                           | ((df_final['frenchTitle'] == films_titre) & (df_final['startYear'] == films_annee))
+                          ]
+    
+    film_choisi = film_choisi.iloc[0:1, 4:]
+    #st.write(film_choisi)
     neighbors = distanceKNN.kneighbors(film_choisi)
-    films_bons = df_final.iloc[neighbors[1][0][1:], -1].values
-    tconsts =  df_final.iloc[neighbors[1][0][1:], 0].values
+    films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
+    films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
+    tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values
+    annees = df_final.iloc[neighbors[1][0][1:]]['startYear'].values
     #for tconst1, titre in zip(tconst, films_bons):
     #    st.write(' {} - {}'.format(tconst1, titre))
     #st.image(url_imdb, width=100)
 
     colfilms = st.columns(3)
-    for cols, tconst, titre in zip(colfilms, tconsts, films_bons):
+    for cols, tconst, titre_fr, titre_eng, annee in zip(colfilms, tconsts, films_titre_fr, films_titre_origine, annees):
         with cols:            
         
             url = url_api + str(tconst) + key_api
@@ -88,7 +110,11 @@ if submit1 and (films != 'Entre ton film pref'):
                 st.image(url_image, width=200)
             except requests.exceptions.RequestException as e:
                 print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-            st.write(' - {} '.format(titre))
+            # parfois il n'existe pas de titre en français
+            if type(titre_fr) == str:
+                st.write(f' - {titre_fr} ({annee})')
+            else:
+                st.write(f' - {titre_eng} ({annee})')
             
 
 st.write('Tu peux aussi éventuellement choisir parmi :')

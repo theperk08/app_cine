@@ -162,25 +162,25 @@ if submit:
     #st.write(film_choisi2.iloc[:,:5])#df_test2
     film_choisi2 = film_choisi2.iloc[0:1,5:]
     X2 = df_test2[list(df_test2.columns)]
-    distanceKNN2 = NearestNeighbors(n_neighbors = 4).fit(X2)
-    neighbors2 = distanceKNN2.kneighbors(film_choisi2)
-    neighbors2
-    films_bons2 = df_final2.iloc[neighbors2[1][0][:], 1].values
-    tconsts2 =  df_final2.iloc[neighbors2[1][0][:], 0].values
+    #distanceKNN2 = NearestNeighbors(n_neighbors = 4).fit(X2)
+    #neighbors2 = distanceKNN2.kneighbors(film_choisi2)
+    #neighbors2
+    #films_bons2 = df_final2.iloc[neighbors2[1][0][:], 1].values
+    #tconsts2 =  df_final2.iloc[neighbors2[1][0][:], 0].values
 
-    colfilms2 = st.columns(3)
-    for cols, tconst, titre in zip(colfilms2, tconsts2, films_bons2):
+    #colfilms2 = st.columns(3)
+    #for cols, tconst, titre in zip(colfilms2, tconsts2, films_bons2):
         #st.write(tconst, titre)
-        with cols:            
+        #with cols:            
         
-            url2 = url_api + str(tconst) + key_api
-            try:
-                response2 = requests.get(url2)
-                response2.raise_for_status()
-                data2 = response2.json()
-                url_image2 = data2['Poster']
-                st.image(url_image2, width=200)
+            #url2 = url_api + str(tconst) + key_api
+            #try:
+            #    response2 = requests.get(url2)
+            #    response2.raise_for_status()
+            #    data2 = response2.json()
+            #    url_image2 = data2['Poster']
+            #    st.image(url_image2, width=200)
                 
-            except requests.exceptions.RequestException as e:
-                print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-            st.write(' - {} '.format(titre))
+            #except requests.exceptions.RequestException as e:
+            #    print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+            #st.write(' - {} '.format(titre))

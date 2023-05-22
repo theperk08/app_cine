@@ -2,9 +2,12 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-#from sklearn.neighbors import NearestNeighbors
-#from sklearn.preprocessing import StandardScaler
-#from sklearn.preprocessing import MinMaxScaler
+from sklearn.neighbors import NearestNeighbors
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+
+#cd Documents\Wild_Code_School\Projets\Projet_2_Cinema
+# streamlit run app_cine_ML.py
 
 # import des fichiers
 df_films = pd.read_pickle("df_noms_films.pkl.gz", compression = 'gzip')
@@ -37,7 +40,7 @@ X = df_test[list(df_test.columns)]
 # Entraînement du modèle, sur les 4 plus proches (donc les 3)
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X_scaled)
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
-#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 
 st.set_page_config(
   page_title = "Ex-stream-ly Cool App",
@@ -88,33 +91,33 @@ if submit1 and (films != 'Entre ton film préféré'):
     
     film_choisi = film_choisi.iloc[0:1, 4:]
     #st.write(film_choisi)
-    #neighbors = distanceKNN.kneighbors(film_choisi)
-    #films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
-    #films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
-    #tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values
-    #annees = df_final.iloc[neighbors[1][0][1:]]['startYear'].values
+    neighbors = distanceKNN.kneighbors(film_choisi)
+    films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
+    films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
+    tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values
+    annees = df_final.iloc[neighbors[1][0][1:]]['startYear'].values
     #for tconst1, titre in zip(tconst, films_bons):
     #    st.write(' {} - {}'.format(tconst1, titre))
     #st.image(url_imdb, width=100)
 
-    #colfilms = st.columns(3)
-    #for cols, tconst, titre_fr, titre_eng, annee in zip(colfilms, tconsts, films_titre_fr, films_titre_origine, annees):
-        #with cols:            
+    colfilms = st.columns(3)
+    for cols, tconst, titre_fr, titre_eng, annee in zip(colfilms, tconsts, films_titre_fr, films_titre_origine, annees):
+        with cols:            
         
-            #url = url_api + str(tconst) + key_api
-            #try:
-            #    response = requests.get(url)
-            #    response.raise_for_status()
-            #    data = response.json()
-            #    url_image = data['Poster']
-            #    st.image(url_image, width=200)
-            #except requests.exceptions.RequestException as e:
-            #    print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+            url = url_api + str(tconst) + key_api
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.json()
+                url_image = data['Poster']
+                st.image(url_image, width=200)
+            except requests.exceptions.RequestException as e:
+                print('Une erreur est survenue lors de l\'appel à l\'API :', e)
             # parfois il n'existe pas de titre en français
-            #if type(titre_fr) == str:
-            #    st.write(f' - {titre_fr} ({annee})')
-            #else:
-            #    st.write(f' - {titre_eng} ({annee})')
+            if type(titre_fr) == str:
+                st.write(f' - {titre_fr} ({annee})')
+            else:
+                st.write(f' - {titre_eng} ({annee})')
             
 
 st.write('Tu peux aussi éventuellement choisir parmi :')
@@ -162,25 +165,25 @@ if submit:
     #st.write(film_choisi2.iloc[:,:5])#df_test2
     film_choisi2 = film_choisi2.iloc[0:1,5:]
     X2 = df_test2[list(df_test2.columns)]
-    #distanceKNN2 = NearestNeighbors(n_neighbors = 4).fit(X2)
-    #neighbors2 = distanceKNN2.kneighbors(film_choisi2)
-    #neighbors2
-    #films_bons2 = df_final2.iloc[neighbors2[1][0][:], 1].values
-    #tconsts2 =  df_final2.iloc[neighbors2[1][0][:], 0].values
+    distanceKNN2 = NearestNeighbors(n_neighbors = 4).fit(X2)
+    neighbors2 = distanceKNN2.kneighbors(film_choisi2)
+    neighbors2
+    films_bons2 = df_final2.iloc[neighbors2[1][0][:], 1].values
+    tconsts2 =  df_final2.iloc[neighbors2[1][0][:], 0].values
 
-    #colfilms2 = st.columns(3)
-    #for cols, tconst, titre in zip(colfilms2, tconsts2, films_bons2):
+    colfilms2 = st.columns(3)
+    for cols, tconst, titre in zip(colfilms2, tconsts2, films_bons2):
         #st.write(tconst, titre)
-        #with cols:            
+        with cols:            
         
-            #url2 = url_api + str(tconst) + key_api
-            #try:
-            #    response2 = requests.get(url2)
-            #    response2.raise_for_status()
-            #    data2 = response2.json()
-            #    url_image2 = data2['Poster']
-            #    st.image(url_image2, width=200)
+            url2 = url_api + str(tconst) + key_api
+            try:
+                response2 = requests.get(url2)
+                response2.raise_for_status()
+                data2 = response2.json()
+                url_image2 = data2['Poster']
+                st.image(url_image2, width=200)
                 
-            #except requests.exceptions.RequestException as e:
-            #    print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-            #st.write(' - {} '.format(titre))
+            except requests.exceptions.RequestException as e:
+                print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+            st.write(' - {} '.format(titre))

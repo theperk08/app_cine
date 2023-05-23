@@ -2,9 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-from sklearn.neighbors import NearestNeighbors
+#from sklearn.neighbors import NearestNeighbors
 #from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import MinMaxScaler
 #import hydralit_components as hc
 
 
@@ -27,11 +27,11 @@ print('debut')
 
 df_annees = df_final[['tconst', 'startYear']]
 
-scaling = MinMaxScaler()
-scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+#scaling = MinMaxScaler()
+#scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 #df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = StandardScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
-df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+#df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 df_test = df_final.iloc[:, 4:]
 
@@ -46,7 +46,7 @@ print(len(df_test))
 # X_scaled = scaler.transform(X)
 
 
-X = df_test[list(df_test.columns)]
+#X = df_test[list(df_test.columns)]
 
 #scaler = StandardScaler().fit(X)
 #X_scaled = scaler.transform(X)
@@ -56,8 +56,21 @@ X = df_test[list(df_test.columns)]
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 print('fit X')
-distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 print('fin fit X')
+
+
+liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'].map(str))
+liste_genres = [''] + list(df_genres['genres'])
+liste_acteurs = [''] + list(df_acteurs['primaryName'])
+
+
+
+
+key_api = "&apikey=79204f79"
+url_api = "http://www.omdbapi.com/?i="
+
+url_title = 'https://www.imdb.com/title/'
 
 st.set_page_config(
   page_title = "Ex-stream-ly Cool App",
@@ -82,42 +95,17 @@ background-size: 10px 10px;
 
 st.markdown(page_bg_img, unsafe_allow_html = True)
   
-phrases_acteurs = ['Tu aimes vraiment {} ?', "{} n'est pas mon acteur/actrice préféré(e) mais je respecte ton choix", "Moi aussi j'adore {} !"]
-
-phrases_annees = ["Ah, c'était vraiment chouette les années {}", "Toi aussi t'as un très bon souvenir des années {} ?", "Bof, on a connu mieux que les années {}"]
-
-phrases_genres = ["J'adore le genre {}", "Le style {} n'est pas mon préféré", "Pas terribles les {}"] 
-
-phrases_alea = ["Avec le film {}, du genre {}, l'acteur/actrice {} et l'année {}\n je te suggère fortement :",
-                "T'as pas honte d'avoir regardé le film {} ?",
-                "Très bon choix l'acteur {}",
-                "C'était chouette les années {}"
-               ]
 
 st.title("Dis-moi ton film préféré :clapper: et je t'en ferai aimer encore d'autres ! :popcorn:")
 
 #liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'].map(str) + ' (' + df_films['startYear'].map(str) + ')')
-liste_films = ['Entre ton film préféré'] + list(df_films['primaryTitle'].map(str))
 
-    #df_films['primaryTitle'] + ' (' + str(df_films['startYear']) + ')')
-
-#url_imdb = "https://www.imdb.com/title/tt0006206/"
-#url_imdb = "https://m.media-amazon.com/images/M/MV5BMTc1NTY3NDIzNl5BMl5BanBnXkFtZTgwNTIyODg5MTE@._V1_QL75_UY281_CR6,0,190,281_.jpg"
-
-key_api = "&apikey=79204f79"
-url_api = "http://www.omdbapi.com/?i="
-
-url_title = 'https://www.imdb.com/title/'
 
 print('debut forme')
 with st.form('form_1'):
     films = st.selectbox("Film : ",
                            liste_films)
-    #films_titre = films[:-7]
-    #try:
-    #    films_annee = int(films[-5:-1])
-    #except:
-    #    films_annee = 0
+   
         
     submit1 = st.form_submit_button("OK !")
     
@@ -180,9 +168,6 @@ if submit1 and (films != 'Entre ton film préféré'):
             
 st.subheader('Tu peux aussi éventuellement choisir parmi au moins un genre ou un acteur :')
 
-liste_genres = [''] + list(df_genres['genres'])
-liste_acteurs = [''] + list(df_acteurs['primaryName'])
-
 
 
 with st.form("form 2"):
@@ -217,46 +202,19 @@ if submit2:
     #st.write(debut_an, fin_an)
    
     film_choisi_annees = pd.merge(df_annees[df_annees['startYear'].between(debut_an, fin_an)], film_choisi2, how = 'left', left_on = 'tconst', right_on = 'tconst')
-    #film_choisi2 = film_choisi2.drop(columns = 'startYear_x')
-    #film_choisi2 = film_choisi2.rename(columns = {'startYear_y' : 'startYear'})
-                                                                                     
-    
-    #st.write('longueur data années', len(film_choisi_annees))
-    
+   
     if genres:
-        #st.write(np.random.choice(phrases_genres).format('/'.join(genres)))   
-        #genres_choisis = '|'.join(genres)
-        #film_choisi2 = film_choisi2[film_choisi2['genres'].str.contains(genres_choisis)]
+        
         film_choisi_genres =  pd.DataFrame()
         for genre in genres:            
             film_choisi_genres = pd.concat([film_choisi_genres, film_choisi_annees[film_choisi_annees[genre] == True]])
         film_choisi_genre_annees = film_choisi_genres.drop_duplicates()
     
-    #st.write('longueur data genres', len(film_choisi_genre_annees))
-    
-    
                                     
     if acteurs != '':
-        #st.write(np.random.choice(phrases_acteurs).format(acteurs))
+        
         film_choisi_acteurs = film_choisi2[film_choisi2[acteurs] == True]
     
-    #st.write('longueur data acteurs', len(film_choisi_acteurs))
-
-    
-    
-    #st.write(film_choisi2)
-    #film_choisi2 = df_final[(df_final['primaryTitle'] == films) | (df_final['originalTitle']==films)]
-    #df_final2 = film_choisi2.iloc[:,:]
-    #df_test2 = df_final2.iloc[:, 4:]
-    #st.write(film_choisi2.iloc[:,:5])#df_test2
-    #film_choisi2 = film_choisi2.iloc[0:1, 4:]
-    #X2 = df_test2[list(df_test2.columns)]
-    #distanceKNN2 = NearestNeighbors(n_neighbors = 4).fit(X2)
-    #distanceKNN2 = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
-    #neighbors2 = distanceKNN2.kneighbors(film_choisi2)
-    #neighbors2
-    #films_bons2 = df_final2.iloc[neighbors2[1][0][:], 1].values
-    #tconsts2 =  df_final2.iloc[neighbors2[1][0][:], 0].values
 
     # PAS DE MACHINE LEARNING,
     
@@ -292,9 +250,7 @@ if submit2:
                     st.write(f' - [{titre_fr}]({url_fr})')
                 else:
                     st.write(f' - [{titre_eng}]({url_fr})')
-
-                
-                    
+                 
     
     # TOP 3 basé sur AverageRating à partir choix : genres et années
     
@@ -331,9 +287,3 @@ if submit2:
                 else:
                     st.write(f' - [{titre_eng}]({url_fr})')
 
-
-                
-    
-                    
-
-    

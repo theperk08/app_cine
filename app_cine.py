@@ -2,9 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-from sklearn.neighbors import NearestNeighbors
+#from sklearn.neighbors import NearestNeighbors
 #from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
+#from sklearn.preprocessing import MinMaxScaler
 #import hydralit_components as hc
 
 
@@ -23,15 +23,19 @@ df_final = pd.read_pickle('df_merge_final_ML2.pkl.gz', compression = 'gzip')
 
 #df_final2 = df_final.copy(deep= True)
 
+print('debut')
+
 df_annees = df_final[['tconst', 'startYear']]
 
-scaling = MinMaxScaler()
-scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+#scaling = MinMaxScaler()
+#scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 #df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = StandardScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
-df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+#df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 df_test = df_final.iloc[:, 4:]
+
+print(len(df_test))
 
 #df_test = df_final.iloc[:, 8:]
 
@@ -42,7 +46,7 @@ df_test = df_final.iloc[:, 4:]
 # X_scaled = scaler.transform(X)
 
 
-X = df_test[list(df_test.columns)]
+#X = df_test[list(df_test.columns)]
 
 #scaler = StandardScaler().fit(X)
 #X_scaled = scaler.transform(X)
@@ -50,7 +54,10 @@ X = df_test[list(df_test.columns)]
 # Entraînement du modèle, sur les 4 plus proches (donc les 3)
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X_scaled)
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
-distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+
+print('fit X')
+#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+print('fin fit X')
 
 st.set_page_config(
   page_title = "Ex-stream-ly Cool App",
@@ -102,7 +109,7 @@ url_api = "http://www.omdbapi.com/?i="
 
 url_title = 'https://www.imdb.com/title/'
 
-
+print('debut forme')
 with st.form('form_1'):
     films = st.selectbox("Film : ",
                            liste_films)

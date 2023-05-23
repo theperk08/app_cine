@@ -46,7 +46,7 @@ print(len(df_test))
 # X_scaled = scaler.transform(X)
 
 
-#X = df_test[list(df_test.columns)]
+X = df_test[list(df_test.columns)]
 
 #scaler = StandardScaler().fit(X)
 #X_scaled = scaler.transform(X)

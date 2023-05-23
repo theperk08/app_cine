@@ -56,7 +56,7 @@ X = df_test[list(df_test.columns)]
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 print('fit X')
-distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 print('fin fit X')
 
 

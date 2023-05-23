@@ -27,7 +27,7 @@ print('debut')
 
 df_annees = df_final[['tconst', 'startYear']]
 
-#scaling = MinMaxScaler()
+scaling = MinMaxScaler()
 #scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 #df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = StandardScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])

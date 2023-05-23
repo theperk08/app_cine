@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 from sklearn.neighbors import NearestNeighbors
 #from sklearn.preprocessing import StandardScaler
-#from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 #import hydralit_components as hc
 
 

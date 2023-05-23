@@ -2,9 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import requests
-#from sklearn.neighbors import NearestNeighbors
+from sklearn.neighbors import NearestNeighbors
 #from sklearn.preprocessing import StandardScaler
-#from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
 #import hydralit_components as hc
 
 
@@ -27,11 +27,11 @@ print('debut')
 
 df_annees = df_final[['tconst', 'startYear']]
 
-#scaling = MinMaxScaler()
-#scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+scaling = MinMaxScaler()
+scaling.fit(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 #df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = StandardScaler().fit_transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
-#df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
+df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']] = scaling.transform(df_final[['startYear', 'runtimeMinutes', 'averageRating', 'numVotes']])
 
 df_test = df_final.iloc[:, 4:]
 
@@ -46,7 +46,7 @@ print(len(df_test))
 # X_scaled = scaler.transform(X)
 
 
-#X = df_test[list(df_test.columns)]
+X = df_test[list(df_test.columns)]
 
 #scaler = StandardScaler().fit(X)
 #X_scaled = scaler.transform(X)
@@ -56,7 +56,7 @@ print(len(df_test))
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 print('fit X')
-#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 print('fin fit X')
 
 st.set_page_config(

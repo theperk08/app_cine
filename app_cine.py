@@ -17,7 +17,7 @@ df_films = pd.read_pickle("df_noms_films2.pkl.gz", compression = 'gzip')
 df_genres = pd.read_pickle("df_genres.pkl.gz", compression = 'gzip')
 df_acteurs = pd.read_pickle('df_noms_acteurs.pkl.gz', compression = 'gzip')
 #df_annees = pd.read_pickle('df_annees.pkl.gz', compression = 'gzip')
-df_final = pd.read_pickle('df_merge_final_ML2.pkl.gz', compression = 'gzip')
+df_final = pd.read_pickle('df_merge_final_ML3.pkl.gz', compression = 'gzip')
 
 # récupération des colonnes intéressantes pour le ML
 
@@ -56,7 +56,7 @@ X = df_test[list(df_test.columns)]
 #distanceKNN = NearestNeighbors(n_neighbors = 4).fit(X)
 
 print('fit X')
-#distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
+distanceKNN = NearestNeighbors(n_neighbors = 4, metric = "cosine", algorithm = "brute").fit(X)
 print('fin fit X')
 
 

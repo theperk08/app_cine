@@ -136,8 +136,7 @@ if submit1 and (films != 'Entre ton film préféré'):
             
             st.subheader('je te suggère fortement de regarder les films :')    
             with st.empty():
-                for k in range(2):
-                    st.write('')
+                st.write(' ')
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
             film_choisi = film_choisi.iloc[0:1, 4:]
       

@@ -111,7 +111,21 @@ with st.form('form_1'):
     
 if submit1 and (films != 'Entre ton film préféré'):
     with st.spinner('Un instant, ça arrive...'):
-        st.subheader(f'Avec le film {films}, je te suggère fortement de regarder les films :')    
+        tconst_choisi = df_films.iloc[liste_films.index(films) - 1 ]['tconst']
+        url = url_api + str(tconst_choisi) + key_api
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = response.json()
+            url_image = data['Poster']
+            st.image(url_image, width=200)
+        except requests.exceptions.RequestException as e:
+            print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+            # parfois il n'existe pas de titre en français
+        url_fr = url_title + str(tconst_choisi)
+        
+        
+        st.subheader(f'Avec le film [{films}]({url_fr}), je te suggère fortement de regarder les films :')    
         #film_choisi = df_final2[((df_final['primaryTitle'] == films_titre) & (df_final['startYear'] == films_annee) )
         #                       | ((df_final['originalTitle'] == films_titre)  & (df_final['startYear'] == films_annee))
         #                       | ((df_final['frenchTitle'] == films_titre) & (df_final['startYear'] == films_annee))
@@ -129,9 +143,8 @@ if submit1 and (films != 'Entre ton film préféré'):
 
 
         film_choisi = film_choisi.iloc[0:1, 4:]
-        #st.write(film_choisi)
-    
-    # a dedicated single loader 
+        #st.write(film_choisi)    
+   
    
    
         neighbors = distanceKNN.kneighbors(film_choisi)

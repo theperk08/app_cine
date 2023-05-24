@@ -122,7 +122,7 @@ if submit1 and (films != 'Entre ton film préféré'):
                 
             url_fr = url_title + str(tconst_choisi)
         
-            st.subheader(f'Avec le film [{films}]({url_fr})')
+            st.subheader(f'Comme tu as aimé le film [{films}]({url_fr})')
             
             cols1, cols2, cols3 = st.columns(3)
             try:

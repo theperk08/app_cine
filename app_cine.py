@@ -133,7 +133,7 @@ if submit1 and (films != 'Entre ton film préféré'):
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
             film_choisi = film_choisi.iloc[0:1, 4:]
       
-           neighbors = distanceKNN.kneighbors(film_choisi)
+            neighbors = distanceKNN.kneighbors(film_choisi)
             films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
             films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
             tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values

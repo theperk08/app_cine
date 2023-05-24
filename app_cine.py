@@ -116,20 +116,23 @@ if submit1 and (films != 'Entre ton film préféré'):
     with st.spinner('Un instant, ça arrive...'):
         tconst_choisi = df_films.iloc[liste_films.index(films) - 1 ]['tconst']
         url = url_api + str(tconst_choisi) + key_api
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            data = response.json()
-            url_image = data['Poster']
-            st.image(url_image, width=200)
-        except requests.exceptions.RequestException as e:
-            print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-                
-        url_fr = url_title + str(tconst_choisi)
+        
         
         with colf2:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.json()
+                url_image = data['Poster']
+                st.image(url_image, width=200)
+            except requests.exceptions.RequestException as e:
+                print('Une erreur est survenue lors de l\'appel à l\'API :', e)
+                
+            url_fr = url_title + str(tconst_choisi)
         
-            st.subheader(f'Avec le film [{films}]({url_fr}), je te suggère fortement de regarder les films :')    
+            st.subheader(f'Avec le film [{films}]({url_fr})')
+            
+            st.subheader('je te suggère fortement de regarder les films :')    
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
             film_choisi = film_choisi.iloc[0:1, 4:]
       

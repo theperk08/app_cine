@@ -103,11 +103,13 @@ st.title("Dis-moi ton film préféré :clapper: et je t'en ferai aimer encore d'
 
 
 print('debut forme')
-with st.form('form_1'):
-    films = st.selectbox("Film : ",
-                           liste_films)
+colf1, colf2, colf3 = st.columns(3)
+
+with colf2:
+    with st.form('form_1'):
+        films = st.selectbox("Film : ",
+                               liste_films)
    
-        
     submit1 = st.form_submit_button("OK !")
     
 if submit1 and (films != 'Entre ton film préféré'):
@@ -122,31 +124,13 @@ if submit1 and (films != 'Entre ton film préféré'):
             st.image(url_image, width=200)
         except requests.exceptions.RequestException as e:
             print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-            # parfois il n'existe pas de titre en français
+                
         url_fr = url_title + str(tconst_choisi)
         
-        
         st.subheader(f'Avec le film [{films}]({url_fr}), je te suggère fortement de regarder les films :')    
-        #film_choisi = df_final2[((df_final['primaryTitle'] == films_titre) & (df_final['startYear'] == films_annee) )
-        #                       | ((df_final['originalTitle'] == films_titre)  & (df_final['startYear'] == films_annee))
-        #                       | ((df_final['frenchTitle'] == films_titre) & (df_final['startYear'] == films_annee))
-        #                      ]
-
-        #film_choisi = df_final[(df_final['primaryTitle'] == films) #_titre )
-        #                       | (df_final['originalTitle'] == films) #_titre) )
-        #                       | (df_final['frenchTitle'] == films)] #_titre))
-
-        #st.write(liste_films.index(films))
-        #st.write(df_films.iloc[liste_films.index(films) - 1 ])
-
         film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
-
-
-
         film_choisi = film_choisi.iloc[0:1, 4:]
-        #st.write(film_choisi)    
-   
-   
+      
    
         neighbors = distanceKNN.kneighbors(film_choisi)
         films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values

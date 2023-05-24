@@ -127,19 +127,18 @@ if submit1 and (films != 'Entre ton film préféré'):
                 
         url_fr = url_title + str(tconst_choisi)
         
-        st.subheader(f'Avec le film [{films}]({url_fr}), je te suggère fortement de regarder les films :')    
-        film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
-        film_choisi = film_choisi.iloc[0:1, 4:]
+        with colf2:
+        
+            st.subheader(f'Avec le film [{films}]({url_fr}), je te suggère fortement de regarder les films :')    
+            film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
+            film_choisi = film_choisi.iloc[0:1, 4:]
       
-   
-        neighbors = distanceKNN.kneighbors(film_choisi)
-        films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
-        films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
-        tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values
-        annees = df_final.iloc[neighbors[1][0][1:]]['startYear'].values
-        #for tconst1, titre in zip(tconst, films_bons):
-        #    st.write(' {} - {}'.format(tconst1, titre))
-        #st.image(url_imdb, width=100)
+           neighbors = distanceKNN.kneighbors(film_choisi)
+            films_titre_fr = df_final.iloc[neighbors[1][0][1:]]['frenchTitle'].values
+            films_titre_origine = df_final.iloc[neighbors[1][0][1:]]['primaryTitle'].values
+            tconsts =  df_final.iloc[neighbors[1][0][1:]]['tconst'].values
+            annees = df_final.iloc[neighbors[1][0][1:]]['startYear'].values
+        
 
         colfilms = st.columns(3)
         for cols, tconst, titre_fr, titre_eng, annee in zip(colfilms, tconsts, films_titre_fr, films_titre_origine, annees):

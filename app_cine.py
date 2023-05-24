@@ -110,7 +110,7 @@ with colf2:
         films = st.selectbox("Film : ",
                                liste_films)
    
-    submit1 = st.form_submit_button("OK !")
+        submit1 = st.form_submit_button("OK !")
     
 if submit1 and (films != 'Entre ton film préféré'):
     with st.spinner('Un instant, ça arrive...'):

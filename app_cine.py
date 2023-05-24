@@ -201,7 +201,7 @@ if submit2:
    
     film_choisi_annees = pd.merge(df_annees[df_annees['startYear'].between(debut_an, fin_an)], film_choisi2, how = 'left', left_on = 'tconst', right_on = 'tconst')
    
-    if genres:
+    if genres != []:
         
         film_choisi_genres =  pd.DataFrame()
         for genre in genres:            

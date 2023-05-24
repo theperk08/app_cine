@@ -118,19 +118,21 @@ if submit1 and (films != 'Entre ton film préféré'):
         url = url_api + str(tconst_choisi) + key_api
         
         
-        with colf2:
+        with colf2:           
+                
+            url_fr = url_title + str(tconst_choisi)
+        
+            st.subheader(f'Avec le film [{films}]({url_fr})')
+            
             try:
                 response = requests.get(url)
                 response.raise_for_status()
                 data = response.json()
                 url_image = data['Poster']
                 st.image(url_image, width=200)
+                
             except requests.exceptions.RequestException as e:
                 print('Une erreur est survenue lors de l\'appel à l\'API :', e)
-                
-            url_fr = url_title + str(tconst_choisi)
-        
-            st.subheader(f'Avec le film [{films}]({url_fr})')
             
             st.subheader('je te suggère fortement de regarder les films :')    
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )

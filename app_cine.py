@@ -135,6 +135,7 @@ if submit1 and (films != 'Entre ton film préféré'):
                 print('Une erreur est survenue lors de l\'appel à l\'API :', e)
             
             st.subheader('je te suggère fortement de regarder les films :')    
+            st.empty()
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
             film_choisi = film_choisi.iloc[0:1, 4:]
       

@@ -122,7 +122,8 @@ if submit1 and (films != 'Entre ton film préféré'):
                 
             url_fr = url_title + str(tconst_choisi)
         
-            st.subheader(f'Comme tu as aimé le film [{films}]({url_fr})')
+            st.subheader(f'Comme tu as aimé le film')
+            st.subheader('[{films}]({url_fr})')
             
             cols1, cols2, cols3 = st.columns(3)
             try:
@@ -136,7 +137,7 @@ if submit1 and (films != 'Entre ton film préféré'):
             except requests.exceptions.RequestException as e:
                 print('Une erreur est survenue lors de l\'appel à l\'API :', e)
             
-            st.subheader('je te suggère fortement de regarder les films :')    
+            st.subheader('je te suggère fortement de regarder :')    
             
             film_choisi = df_final[df_final['tconst'] == df_films.iloc[liste_films.index(films) - 1 ]['tconst']] #_titre )
             film_choisi = film_choisi.iloc[0:1, 4:]

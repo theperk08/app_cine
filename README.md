@@ -7,7 +7,7 @@
 
 - Outils : :snake:Python (pandas, scikit-learn), streamlit 
 - Lien vers l'application finale : [Appli cinemat](https://cinemat.streamlit.app/)  
-<a href="https://theperk08.github.io" target="_blank"><img src="Appli_Cine.jpg" width="800" height="600">
+<a href="https://cinemat.streamlit.app/" target="_blank"><img src="Appli_Cine.jpg" width="800" height="600">
 
 
 
